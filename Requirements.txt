@@ -1,0 +1,10 @@
+This application will build a matrix of (n,m)-size with k-colors.
+First we need to input our columns and rows range with number boxes. The matrix should generate on change!
+There is another window with the list of usable colors, you can add color to the list with the default palette or
+with a custom color that you have picked (Hexadecimal and RGB code could be used).
+Then you just have to click on a color in the list and click on the matrix in order to build your pattern.
+
+This application can export your pattern as a :
+Python Matrix in .txt, .json file or even an image (.jpg, .jpeg, .png, .svg, .pdf)
+Tabler (.csv, .xls, .xlsx)
+Pattern image (.jpg, .jpeg, .png with white background, .png w/out background, .svg, .pdf)
