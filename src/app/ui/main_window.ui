@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Pattern Builder by lyl-Lynx</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../assets/img/pattern_builder_logo_c_800px.png</normaloff>../../assets/img/pattern_builder_logo_c_800px.png</iconset>
+  </property>
   <widget class="QWidget" name="main_widget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -173,7 +177,17 @@
            <item>
             <layout class="QHBoxLayout" name="wxh_spinBox_horizontal_layout">
              <item>
-              <widget class="QSpinBox" name="width_spinBox"/>
+              <widget class="QSpinBox" name="width_spinBox">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>64</number>
+               </property>
+               <property name="value">
+                <number>3</number>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QSpinBox" name="height_spinBox">
@@ -182,6 +196,15 @@
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>64</number>
+               </property>
+               <property name="value">
+                <number>3</number>
                </property>
               </widget>
              </item>
@@ -250,7 +273,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="colors_comboBox"/>
+          <widget class="QComboBox" name="colors_comboBox">
+           <property name="maxVisibleItems">
+            <number>64</number>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="colors_table_button">
@@ -504,9 +531,17 @@
      <property name="title">
       <string>Export as...</string>
      </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../../../../../src/img/Material design/FileMenu/Export.png</normaloff>../../../../../../../src/img/Material design/FileMenu/Export.png</iconset>
+     </property>
      <widget class="QMenu" name="menu_matrix">
       <property name="title">
        <string>Matrix</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/img/matrix.png</normaloff>../../assets/img/matrix.png</iconset>
       </property>
       <addaction name="action_matrix_text_file_txt"/>
       <addaction name="action_matrix_json"/>
@@ -525,6 +560,10 @@
      <widget class="QMenu" name="menu_pattern">
       <property name="title">
        <string>Pattern</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../../assets/img/pattern_builder_logo_c_800px.png</normaloff>../../assets/img/pattern_builder_logo_c_800px.png</iconset>
       </property>
       <addaction name="action_pattern_image_jpeg"/>
       <addaction name="action_pattern_image_jpg"/>
@@ -559,21 +598,37 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_new">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/NewFile.png</normaloff>../../assets/img/NewFile.png</iconset>
+   </property>
    <property name="text">
     <string>New...</string>
    </property>
   </action>
   <action name="action_open">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/OpenFile.png</normaloff>../../assets/img/OpenFile.png</iconset>
+   </property>
    <property name="text">
     <string>Open...</string>
    </property>
   </action>
   <action name="action_save">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/Save.png</normaloff>../../assets/img/Save.png</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
   </action>
   <action name="action_save_as">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/SaveAs.png</normaloff>../../assets/img/SaveAs.png</iconset>
+   </property>
    <property name="text">
     <string>Save as...</string>
    </property>
@@ -664,21 +719,37 @@
    </property>
   </action>
   <action name="action_help">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/QuestionMark.png</normaloff>../../assets/img/QuestionMark.png</iconset>
+   </property>
    <property name="text">
     <string>Pattern builder help</string>
    </property>
   </action>
   <action name="action_about_pb">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/pattern_builder_logo_c_800px.png</normaloff>../../assets/img/pattern_builder_logo_c_800px.png</iconset>
+   </property>
    <property name="text">
     <string>About Pattern builder</string>
    </property>
   </action>
   <action name="action_about_author">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/lyl8Lynx_logo.png</normaloff>../../assets/img/lyl8Lynx_logo.png</iconset>
+   </property>
    <property name="text">
     <string>About lyl-Lynx</string>
    </property>
   </action>
   <action name="action_join_us">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../assets/img/GitHub.png</normaloff>../../assets/img/GitHub.png</iconset>
+   </property>
    <property name="text">
     <string>Join us on GitHub !</string>
    </property>
