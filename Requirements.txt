@@ -8,3 +8,6 @@ This application can export your pattern as a :
 Python Matrix in .txt, .json file or even an image (.jpg, .jpeg, .png, .svg, .pdf)
 Tabler (.csv, .xls, .xlsx)
 Pattern image (.jpg, .jpeg, .png with white background, .png w/out background, .svg, .pdf)
+
+pygame~=2.1.2
+PyQt5~=5.15.6
