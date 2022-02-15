@@ -10,7 +10,7 @@
 # Some modifications made to this generated class by lyl-Lynx.
 
 import sys
-from UiTableViewForm import UiTableViewForm
+from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -29,7 +29,9 @@ class UiMainWindow(object):
         icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         main_window.setWindowIcon(icon)
 
-        #self.table_widget_form = UiTableViewForm()
+        self.colors_widget = QtWidgets.QWidget()
+        self.table_view_form = UiTableViewForm(self.colors_widget)
+        self.table_view_form.close_button.clicked.connect(self.update_colors_select)
 
         self.main_widget = QtWidgets.QWidget(main_window)
         self.main_widget.setObjectName("main_widget")
@@ -169,10 +171,15 @@ class UiMainWindow(object):
         self.colors_comboBox = QtWidgets.QComboBox(self.toolBox_frame)
         self.colors_comboBox.setMaxVisibleItems(64)
         self.colors_comboBox.setObjectName("colors_comboBox")
+        initial_items = self.table_view_form.get_all()
+        for item in initial_items:
+            self.colors_comboBox.addItem(str(item['id']))
+        self.selected_color_id = int(self.colors_comboBox.currentText())
         self.verticalLayout.addWidget(self.colors_comboBox)
 
         self.colors_table_button = QtWidgets.QPushButton(self.toolBox_frame)
         self.colors_table_button.setObjectName("colors_table_button")
+        self.colors_table_button.clicked.connect(self.colors_widget.show)
         self.verticalLayout.addWidget(self.colors_table_button)
 
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -464,10 +471,17 @@ class UiMainWindow(object):
         return self.height_spinBox.value()
 
     def get_selected_color(self):
-        return self.table_widget_form.getById(int(self.colors_comboBox.currentText()))
+        return self.table_view_form.getById(int(self.colors_comboBox.currentText()))
 
     def colors_count(self):
-        return self.table_widget_form.get_row_count()
+        return self.table_view_form.get_row_count()
+
+    def update_colors_select(self):
+        items = self.table_view_form.get_all().copy()
+        self.colors_comboBox.clear()
+        for item in items:
+            self.colors_comboBox.addItem(str(item['id']))
+
 
     def retranslate_ui(self, main_window):
         _translate = QtCore.QCoreApplication.translate
@@ -512,9 +526,9 @@ class UiMainWindow(object):
         self.action_about_author.setText(_translate("main_window", "About lyl-Lynx"))
         self.action_join_us.setText(_translate("main_window", "Join us on GitHub !"))
 
-
-app = QtWidgets.QApplication(sys.argv)
-window = QtWidgets.QMainWindow()
-ui = UiMainWindow(window)
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QMainWindow()
+    ui = UiMainWindow(window)
+    window.show()
+    sys.exit(app.exec_())
