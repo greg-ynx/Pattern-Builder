@@ -126,6 +126,7 @@ class UiTableViewForm(object):
 
         self.close_button = QtWidgets.QPushButton(self.close_widget)
         self.close_button.setObjectName("close_button")
+        self.close_button.clicked.connect(self.table_view_form.close)
         self.horizontalLayout_2.addWidget(self.close_button)
 
         self.verticalLayout.addWidget(self.close_widget)
@@ -241,9 +242,9 @@ class UiTableViewForm(object):
         self.table_widget.setSortingEnabled(__sortingEnabled)
         self.close_button.setText(_translate("table_view_form", "Close"))
 
-
-app = QtWidgets.QApplication(sys.argv)
-widget = QtWidgets.QWidget()
-ui = UiTableViewForm(widget)
-widget.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    widget = QtWidgets.QWidget()
+    ui = UiTableViewForm(widget)
+    widget.show()
+    sys.exit(app.exec_())

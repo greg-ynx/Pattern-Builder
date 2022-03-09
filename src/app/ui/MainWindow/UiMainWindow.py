@@ -10,8 +10,13 @@
 # Some modifications made to this generated class by lyl-Lynx.
 
 import sys
-from UiTableViewForm import UiTableViewForm
+
+
+
+from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QPushButton
+from src.app.components.PatternGrid import PatternGrid
 
 
 class UiMainWindow(object):
@@ -28,8 +33,11 @@ class UiMainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         main_window.setWindowIcon(icon)
+        self.main_window = main_window
 
-        #self.table_widget_form = UiTableViewForm()
+        self.colors_widget = QtWidgets.QWidget()
+        self.table_view_form = UiTableViewForm(self.colors_widget)
+        self.table_view_form.close_button.clicked.connect(self.update_colors_select)
 
         self.main_widget = QtWidgets.QWidget(main_window)
         self.main_widget.setObjectName("main_widget")
@@ -120,9 +128,10 @@ class UiMainWindow(object):
 
         self.width_spinBox = QtWidgets.QSpinBox(self.toolBox_frame)
         self.width_spinBox.setMinimum(1)
-        self.width_spinBox.setMaximum(64)
+        self.width_spinBox.setMaximum(16)
         self.width_spinBox.setProperty("value", 3)
         self.width_spinBox.setObjectName("width_spinBox")
+        self.width_spinBox.valueChanged.connect(self.on_change_size)
         self.wxh_spinBox_horizontal_layout.addWidget(self.width_spinBox)
 
         self.height_spinBox = QtWidgets.QSpinBox(self.toolBox_frame)
@@ -132,9 +141,10 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(self.height_spinBox.sizePolicy().hasHeightForWidth())
         self.height_spinBox.setSizePolicy(size_policy)
         self.height_spinBox.setMinimum(1)
-        self.height_spinBox.setMaximum(64)
+        self.height_spinBox.setMaximum(16)
         self.height_spinBox.setProperty("value", 3)
         self.height_spinBox.setObjectName("height_spinBox")
+        self.height_spinBox.valueChanged.connect(self.on_change_size)
         self.wxh_spinBox_horizontal_layout.addWidget(self.height_spinBox)
 
         self.toolBox_vertical_layout.addLayout(self.wxh_spinBox_horizontal_layout)
@@ -169,10 +179,15 @@ class UiMainWindow(object):
         self.colors_comboBox = QtWidgets.QComboBox(self.toolBox_frame)
         self.colors_comboBox.setMaxVisibleItems(64)
         self.colors_comboBox.setObjectName("colors_comboBox")
+        initial_items = self.table_view_form.get_all()
+        for item in initial_items:
+            self.colors_comboBox.addItem(str(item['id']))
+        self.selected_color_id = int(self.colors_comboBox.currentText())
         self.verticalLayout.addWidget(self.colors_comboBox)
 
         self.colors_table_button = QtWidgets.QPushButton(self.toolBox_frame)
         self.colors_table_button.setObjectName("colors_table_button")
+        self.colors_table_button.clicked.connect(self.colors_widget.show)
         self.verticalLayout.addWidget(self.colors_table_button)
 
         spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -199,6 +214,7 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(self.reset_button.sizePolicy().hasHeightForWidth())
         self.reset_button.setSizePolicy(size_policy)
         self.reset_button.setObjectName("reset_button")
+        self.reset_button.clicked.connect(self.reset_matrix)
         self.reset_button_horizontal_layout.addWidget(self.reset_button)
 
         spacerItem6 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -271,10 +287,18 @@ class UiMainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.pattern_frame)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.pattern_openGL_widget = QtWidgets.QOpenGLWidget(self.pattern_frame)
-        self.pattern_openGL_widget.setObjectName("pattern_openGL_widget")
-
-        self.gridLayout.addWidget(self.pattern_openGL_widget, 0, 0, 1, 1)
+        for row in range(self.get_height()):
+            for column in range(self.get_width()):
+                item = QPushButton()
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+                sizePolicy.setHeightForWidth(item.sizePolicy().hasHeightForWidth())
+                item.setSizePolicy(sizePolicy)
+                item.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                item.setObjectName("button{}{}".format(row, column))
+                item.setText("0")
+                item.setStyleSheet("background-color : #FF0000")
+                item.clicked.connect(self.switch_button_color)
+                self.gridLayout.addWidget(item, row, column)
 
         self.main_pattern_layout.addWidget(self.pattern_frame, 0, 0, 1, 1)
 
@@ -464,10 +488,49 @@ class UiMainWindow(object):
         return self.height_spinBox.value()
 
     def get_selected_color(self):
-        return self.table_widget_form.getById(int(self.colors_comboBox.currentText()))
+        return self.table_view_form.getById(int(self.colors_comboBox.currentText()))
 
     def colors_count(self):
-        return self.table_widget_form.get_row_count()
+        return self.table_view_form.get_row_count()
+
+    def update_colors_select(self):
+        items = self.table_view_form.get_all().copy()
+        self.colors_comboBox.clear()
+        for item in items:
+            self.colors_comboBox.addItem(str(item['id']))
+
+    def switch_button_color(self):
+        button = self.main_window.sender()
+        params = self.get_selected_color()
+        print(params)
+        button.setText(str(params['id']))
+        button.setStyleSheet("background-color : "+params['Hex'])
+
+    def update_matrix_size(self):
+        for row in range(self.get_height()):
+            for column in range(self.get_width()):
+                item = QPushButton()
+                sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+                sizePolicy.setHeightForWidth(item.sizePolicy().hasHeightForWidth())
+                item.setSizePolicy(sizePolicy)
+                item.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+                item.setObjectName("button{}{}".format(row, column))
+                item.setText("0")
+                item.setStyleSheet("background-color : #FF0000")
+                item.clicked.connect(self.switch_button_color)
+                self.gridLayout.addWidget(item, row, column)
+
+    def reset_matrix(self):
+        self.width_spinBox.setProperty("value", 3)
+        self.height_spinBox.setProperty("value", 3)
+        for i in reversed(range(self.gridLayout.count())):
+            self.gridLayout.itemAt(i).widget().setParent(None)
+        self.update_matrix_size()
+
+    def on_change_size(self):
+        for i in reversed(range(self.gridLayout.count())):
+            self.gridLayout.itemAt(i).widget().setParent(None)
+        self.update_matrix_size()
 
     def retranslate_ui(self, main_window):
         _translate = QtCore.QCoreApplication.translate
@@ -512,9 +575,9 @@ class UiMainWindow(object):
         self.action_about_author.setText(_translate("main_window", "About lyl-Lynx"))
         self.action_join_us.setText(_translate("main_window", "Join us on GitHub !"))
 
-
-app = QtWidgets.QApplication(sys.argv)
-window = QtWidgets.QMainWindow()
-ui = UiMainWindow(window)
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QMainWindow()
+    ui = UiMainWindow(window)
+    window.show()
+    sys.exit(app.exec_())
