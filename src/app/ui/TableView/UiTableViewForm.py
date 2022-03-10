@@ -135,8 +135,6 @@ class UiTableViewForm(object):
 
         self.retranslateUi(table_view_form)
         QtCore.QMetaObject.connectSlotsByName(table_view_form)
-        print(self.get_all())
-        print(self.getById(0))
 
     def get_row_count(self):
         return self.table_widget.rowCount()

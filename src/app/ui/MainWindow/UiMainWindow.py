@@ -11,12 +11,12 @@
 
 import sys
 
-from PyQt5.QtGui import QStandardItem, QColor
-
 from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
+from src.app.ui.AboutForm.UiAboutForm import UiAboutForm
+import webbrowser
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QStandardItem, QColor
 from PyQt5.QtWidgets import QPushButton
-from src.app.components.PatternGrid import PatternGrid
 
 
 class UiMainWindow(object):
@@ -31,9 +31,28 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(main_window.sizePolicy().hasHeightForWidth())
         main_window.setSizePolicy(size_policy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
         main_window.setWindowIcon(icon)
         self.main_window = main_window
+
+        self.help_pattern_builder_widget = QtWidgets.QWidget()
+        self.help_pattern_builder_form = UiAboutForm(self.help_pattern_builder_widget,
+                                                     "Pattern builder help",
+                                                     "../../../assets/img/QuestionMark.png",
+                                                     "../../../assets/txt/help_pattern_builder.txt")
+
+        self.about_pattern_builder_widget = QtWidgets.QWidget()
+        self.about_pattern_builder_form = UiAboutForm(self.about_pattern_builder_widget,
+                                                      "About Pattern Builder",
+                                                      "../../../assets/img/pattern_builder_logo_c_800px.png",
+                                                      "../../../assets/txt/about_pattern_builder.txt")
+
+        self.about_lyl_lynx_widget = QtWidgets.QWidget()
+        self.about_lyl_lynx_form = UiAboutForm(self.about_lyl_lynx_widget,
+                                               "About lyl-Lynx",
+                                               "../../../assets/img/lyl8Lynx_logo.png",
+                                               "../../../assets/txt/about_lyl_lynx.txt")
 
         self.colors_widget = QtWidgets.QWidget()
         self.table_view_form = UiTableViewForm(self.colors_widget)
@@ -381,22 +400,26 @@ class UiMainWindow(object):
         icon8.addPixmap(QtGui.QPixmap("../../../assets/img/QuestionMark.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_help.setIcon(icon8)
         self.action_help.setObjectName("action_help")
+        self.action_help.triggered.connect(self.help_pattern_builder_widget.show)
 
         self.action_about_pb = QtWidgets.QAction(main_window)
         self.action_about_pb.setIcon(icon3)
         self.action_about_pb.setObjectName("action_about_pb")
+        self.action_about_pb.triggered.connect(self.about_pattern_builder_widget.show)
 
         self.action_about_author = QtWidgets.QAction(main_window)
         icon9 = QtGui.QIcon()
         icon9.addPixmap(QtGui.QPixmap("../../../assets/img/lyl8Lynx_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_about_author.setIcon(icon9)
         self.action_about_author.setObjectName("action_about_author")
+        self.action_about_author.triggered.connect(self.about_lyl_lynx_widget.show)
 
         self.action_join_us = QtWidgets.QAction(main_window)
         icon10 = QtGui.QIcon()
         icon10.addPixmap(QtGui.QPixmap("../../../assets/img/GitHub.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_join_us.setIcon(icon10)
         self.action_join_us.setObjectName("action_join_us")
+        self.action_join_us.triggered.connect(self.redirect_to_github_repo)
 
         self.menu_matrix.addAction(self.action_matrix_text_file_txt)
         self.menu_matrix.addAction(self.action_matrix_json)
@@ -463,7 +486,7 @@ class UiMainWindow(object):
         params = self.get_selected_color()
         print(params)
         button.setText(str(params['id']))
-        button.setStyleSheet("background-color : "+params['Hex'])
+        button.setStyleSheet("background-color : " + params['Hex'])
 
     def update_matrix_size(self):
         for row in range(self.get_height()):
@@ -490,6 +513,9 @@ class UiMainWindow(object):
         for i in reversed(range(self.gridLayout.count())):
             self.gridLayout.itemAt(i).widget().setParent(None)
         self.update_matrix_size()
+
+    def redirect_to_github_repo(self):
+        webbrowser.open('https://github.com/lyl-Lynx/Pattern-Builder')
 
     def retranslate_ui(self, main_window):
         _translate = QtCore.QCoreApplication.translate
@@ -528,6 +554,7 @@ class UiMainWindow(object):
         self.action_about_pb.setText(_translate("main_window", "About Pattern builder"))
         self.action_about_author.setText(_translate("main_window", "About lyl-Lynx"))
         self.action_join_us.setText(_translate("main_window", "Join us on GitHub !"))
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
