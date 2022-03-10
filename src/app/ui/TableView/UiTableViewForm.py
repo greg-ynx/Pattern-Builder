@@ -173,7 +173,7 @@ class UiTableViewForm(object):
     def add(self):
         count = self.get_row_count()
         try:
-            if count < 64:
+            if count < 16:
                 color = QtWidgets.QColorDialog.getColor()
                 print(color.name())
                 print(color.name().upper())
@@ -193,7 +193,7 @@ class UiTableViewForm(object):
             else:
                 raise TableMaxItemError
         except TableMaxItemError:
-            print("Max items amount (64 colors) already reach in table!")
+            print("Max items amount (16 colors) already reach in table!")
 
     def delete(self):
         try:

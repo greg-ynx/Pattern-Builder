@@ -11,7 +11,7 @@
 
 import sys
 
-
+from PyQt5.QtGui import QStandardItem, QColor
 
 from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -177,11 +177,15 @@ class UiMainWindow(object):
         self.verticalLayout.addWidget(self.toolBox_colors_title)
 
         self.colors_comboBox = QtWidgets.QComboBox(self.toolBox_frame)
-        self.colors_comboBox.setMaxVisibleItems(64)
+        self.colors_comboBox.setMaxVisibleItems(16)
+        model = self.colors_comboBox.model()
         self.colors_comboBox.setObjectName("colors_comboBox")
         initial_items = self.table_view_form.get_all()
         for item in initial_items:
-            self.colors_comboBox.addItem(str(item['id']))
+            c_item = QStandardItem()
+            c_item.setText(str(item['id']))
+            c_item.setBackground(QColor(item['Hex']))
+            model.appendRow(c_item)
         self.selected_color_id = int(self.colors_comboBox.currentText())
         self.verticalLayout.addWidget(self.colors_comboBox)
 
@@ -221,26 +225,6 @@ class UiMainWindow(object):
         self.reset_button_horizontal_layout.addItem(spacerItem6)
 
         self.verticalLayout.addLayout(self.reset_button_horizontal_layout)
-
-        self.save_button_horizontal_layout = QtWidgets.QHBoxLayout()
-        self.save_button_horizontal_layout.setObjectName("save_button_horizontal_layout")
-
-        spacerItem7 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.save_button_horizontal_layout.addItem(spacerItem7)
-
-        self.save_button = QtWidgets.QPushButton(self.toolBox_frame)
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        size_policy.setHorizontalStretch(0)
-        size_policy.setVerticalStretch(0)
-        size_policy.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
-        self.save_button.setSizePolicy(size_policy)
-        self.save_button.setObjectName("save_button")
-        self.save_button_horizontal_layout.addWidget(self.save_button)
-
-        spacerItem8 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.save_button_horizontal_layout.addItem(spacerItem8)
-
-        self.verticalLayout.addLayout(self.save_button_horizontal_layout)
 
         self.export_button_horizontal_layout = QtWidgets.QHBoxLayout()
         self.export_button_horizontal_layout.setObjectName("export_button_horizontal_layout")
@@ -341,30 +325,6 @@ class UiMainWindow(object):
         self.statusbar.setObjectName("statusbar")
         main_window.setStatusBar(self.statusbar)
 
-        self.action_new = QtWidgets.QAction(main_window)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("../../../assets/img/NewFile.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_new.setIcon(icon4)
-        self.action_new.setObjectName("action_new")
-
-        self.action_open = QtWidgets.QAction(main_window)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("../../../assets/img/OpenFile.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_open.setIcon(icon5)
-        self.action_open.setObjectName("action_open")
-
-        self.action_save = QtWidgets.QAction(main_window)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("../../../assets/img/Save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_save.setIcon(icon6)
-        self.action_save.setObjectName("action_save")
-
-        self.action_save_as = QtWidgets.QAction(main_window)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("../../../assets/img/SaveAs.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_save_as.setIcon(icon7)
-        self.action_save_as.setObjectName("action_save_as")
-
         self.action_matrix_text_file_txt = QtWidgets.QAction(main_window)
         self.action_matrix_text_file_txt.setObjectName("action_matrix_text_file_txt")
 
@@ -461,11 +421,6 @@ class UiMainWindow(object):
         self.menu_pattern.addAction(self.action_pattern_pdf)
         self.menu_export_as.addAction(self.menu_pattern.menuAction())
 
-        self.menu_file.addAction(self.action_new)
-        self.menu_file.addAction(self.action_open)
-        self.menu_file.addSeparator()
-        self.menu_file.addAction(self.action_save)
-        self.menu_file.addAction(self.action_save_as)
         self.menu_file.addAction(self.menu_export_as.menuAction())
 
         self.menu_help.addAction(self.action_help)
@@ -496,8 +451,12 @@ class UiMainWindow(object):
     def update_colors_select(self):
         items = self.table_view_form.get_all().copy()
         self.colors_comboBox.clear()
+        model = self.colors_comboBox.model()
         for item in items:
-            self.colors_comboBox.addItem(str(item['id']))
+            c_item = QStandardItem()
+            c_item.setText(str(item['id']))
+            c_item.setBackground(QColor(item['Hex']))
+            model.appendRow(c_item)
 
     def switch_button_color(self):
         button = self.main_window.sender()
@@ -542,17 +501,12 @@ class UiMainWindow(object):
         self.toolBox_colors_title.setText(_translate("main_window", "Colors"))
         self.colors_table_button.setText(_translate("main_window", "Open colors table"))
         self.reset_button.setText(_translate("main_window", "Reset pattern"))
-        self.save_button.setText(_translate("main_window", "Save"))
         self.export_button.setText(_translate("main_window", "Export"))
         self.menu_file.setTitle(_translate("main_window", "File"))
         self.menu_export_as.setTitle(_translate("main_window", "Export as..."))
         self.menu_matrix.setTitle(_translate("main_window", "Matrix"))
         self.menu_pattern.setTitle(_translate("main_window", "Pattern"))
         self.menu_help.setTitle(_translate("main_window", "Help"))
-        self.action_new.setText(_translate("main_window", "New..."))
-        self.action_open.setText(_translate("main_window", "Open..."))
-        self.action_save.setText(_translate("main_window", "Save"))
-        self.action_save_as.setText(_translate("main_window", "Save as..."))
         self.action_matrix_text_file_txt.setText(_translate("main_window", "Text file (.txt)"))
         self.action_matrix_json.setText(_translate("main_window", "JSON (.json)"))
         self.action_matrix_tabler_csv.setText(_translate("main_window", "Tabler (.csv)"))
