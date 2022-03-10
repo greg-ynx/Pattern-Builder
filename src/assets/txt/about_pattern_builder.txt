@@ -1,0 +1,15 @@
+About Pattern Builder :
+
+Pattern Builder was a side project that I had to develop in order to return a Python array that would be used as a
+"pattern".
+
+This application is fully developed with Python programming language. You can access, read and download all files on
+my GitHub !
+
+If you ever want to help in order to enhance Pattern Builder application efficiency or its core code, feel free to
+open an issue or a merge request on the GitHub repository.
+
+if you have more questions about this application, you can contact me with this email address :
+    <gregory.ployartwork@gmail.com>
+
+lyl-Lynx

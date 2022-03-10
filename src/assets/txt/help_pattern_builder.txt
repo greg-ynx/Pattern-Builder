@@ -1,0 +1,6 @@
+If you encounter an issue with Pattern Builder's features, please open an issue on GitHub.
+    -> link : https://github.com/lyl-Lynx/Pattern-Builder
+
+You can also directly tell me about your issue on my mail address : <gregory.ployartwork@gmail.com>
+
+lyl-Lynx

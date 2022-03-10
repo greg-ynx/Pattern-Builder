@@ -11,12 +11,12 @@
 
 import sys
 
-
-
 from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
+from src.app.ui.AboutForm.UiAboutForm import UiAboutForm
+import webbrowser
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QStandardItem, QColor
 from PyQt5.QtWidgets import QPushButton
-from src.app.components.PatternGrid import PatternGrid
 
 
 class UiMainWindow(object):
@@ -31,9 +31,28 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(main_window.sizePolicy().hasHeightForWidth())
         main_window.setSizePolicy(size_policy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
         main_window.setWindowIcon(icon)
         self.main_window = main_window
+
+        self.help_pattern_builder_widget = QtWidgets.QWidget()
+        self.help_pattern_builder_form = UiAboutForm(self.help_pattern_builder_widget,
+                                                     "Pattern builder help",
+                                                     "../../../assets/img/QuestionMark.png",
+                                                     "../../../assets/txt/help_pattern_builder.txt")
+
+        self.about_pattern_builder_widget = QtWidgets.QWidget()
+        self.about_pattern_builder_form = UiAboutForm(self.about_pattern_builder_widget,
+                                                      "About Pattern Builder",
+                                                      "../../../assets/img/pattern_builder_logo_c_800px.png",
+                                                      "../../../assets/txt/about_pattern_builder.txt")
+
+        self.about_lyl_lynx_widget = QtWidgets.QWidget()
+        self.about_lyl_lynx_form = UiAboutForm(self.about_lyl_lynx_widget,
+                                               "About lyl-Lynx",
+                                               "../../../assets/img/lyl8Lynx_logo.png",
+                                               "../../../assets/txt/about_lyl_lynx.txt")
 
         self.colors_widget = QtWidgets.QWidget()
         self.table_view_form = UiTableViewForm(self.colors_widget)
@@ -177,11 +196,15 @@ class UiMainWindow(object):
         self.verticalLayout.addWidget(self.toolBox_colors_title)
 
         self.colors_comboBox = QtWidgets.QComboBox(self.toolBox_frame)
-        self.colors_comboBox.setMaxVisibleItems(64)
+        self.colors_comboBox.setMaxVisibleItems(16)
+        model = self.colors_comboBox.model()
         self.colors_comboBox.setObjectName("colors_comboBox")
         initial_items = self.table_view_form.get_all()
         for item in initial_items:
-            self.colors_comboBox.addItem(str(item['id']))
+            c_item = QStandardItem()
+            c_item.setText(str(item['id']))
+            c_item.setBackground(QColor(item['Hex']))
+            model.appendRow(c_item)
         self.selected_color_id = int(self.colors_comboBox.currentText())
         self.verticalLayout.addWidget(self.colors_comboBox)
 
@@ -221,26 +244,6 @@ class UiMainWindow(object):
         self.reset_button_horizontal_layout.addItem(spacerItem6)
 
         self.verticalLayout.addLayout(self.reset_button_horizontal_layout)
-
-        self.save_button_horizontal_layout = QtWidgets.QHBoxLayout()
-        self.save_button_horizontal_layout.setObjectName("save_button_horizontal_layout")
-
-        spacerItem7 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.save_button_horizontal_layout.addItem(spacerItem7)
-
-        self.save_button = QtWidgets.QPushButton(self.toolBox_frame)
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        size_policy.setHorizontalStretch(0)
-        size_policy.setVerticalStretch(0)
-        size_policy.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
-        self.save_button.setSizePolicy(size_policy)
-        self.save_button.setObjectName("save_button")
-        self.save_button_horizontal_layout.addWidget(self.save_button)
-
-        spacerItem8 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.save_button_horizontal_layout.addItem(spacerItem8)
-
-        self.verticalLayout.addLayout(self.save_button_horizontal_layout)
 
         self.export_button_horizontal_layout = QtWidgets.QHBoxLayout()
         self.export_button_horizontal_layout.setObjectName("export_button_horizontal_layout")
@@ -341,30 +344,6 @@ class UiMainWindow(object):
         self.statusbar.setObjectName("statusbar")
         main_window.setStatusBar(self.statusbar)
 
-        self.action_new = QtWidgets.QAction(main_window)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("../../../assets/img/NewFile.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_new.setIcon(icon4)
-        self.action_new.setObjectName("action_new")
-
-        self.action_open = QtWidgets.QAction(main_window)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("../../../assets/img/OpenFile.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_open.setIcon(icon5)
-        self.action_open.setObjectName("action_open")
-
-        self.action_save = QtWidgets.QAction(main_window)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("../../../assets/img/Save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_save.setIcon(icon6)
-        self.action_save.setObjectName("action_save")
-
-        self.action_save_as = QtWidgets.QAction(main_window)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("../../../assets/img/SaveAs.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_save_as.setIcon(icon7)
-        self.action_save_as.setObjectName("action_save_as")
-
         self.action_matrix_text_file_txt = QtWidgets.QAction(main_window)
         self.action_matrix_text_file_txt.setObjectName("action_matrix_text_file_txt")
 
@@ -421,22 +400,26 @@ class UiMainWindow(object):
         icon8.addPixmap(QtGui.QPixmap("../../../assets/img/QuestionMark.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_help.setIcon(icon8)
         self.action_help.setObjectName("action_help")
+        self.action_help.triggered.connect(self.help_pattern_builder_widget.show)
 
         self.action_about_pb = QtWidgets.QAction(main_window)
         self.action_about_pb.setIcon(icon3)
         self.action_about_pb.setObjectName("action_about_pb")
+        self.action_about_pb.triggered.connect(self.about_pattern_builder_widget.show)
 
         self.action_about_author = QtWidgets.QAction(main_window)
         icon9 = QtGui.QIcon()
         icon9.addPixmap(QtGui.QPixmap("../../../assets/img/lyl8Lynx_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_about_author.setIcon(icon9)
         self.action_about_author.setObjectName("action_about_author")
+        self.action_about_author.triggered.connect(self.about_lyl_lynx_widget.show)
 
         self.action_join_us = QtWidgets.QAction(main_window)
         icon10 = QtGui.QIcon()
         icon10.addPixmap(QtGui.QPixmap("../../../assets/img/GitHub.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_join_us.setIcon(icon10)
         self.action_join_us.setObjectName("action_join_us")
+        self.action_join_us.triggered.connect(self.redirect_to_github_repo)
 
         self.menu_matrix.addAction(self.action_matrix_text_file_txt)
         self.menu_matrix.addAction(self.action_matrix_json)
@@ -461,11 +444,6 @@ class UiMainWindow(object):
         self.menu_pattern.addAction(self.action_pattern_pdf)
         self.menu_export_as.addAction(self.menu_pattern.menuAction())
 
-        self.menu_file.addAction(self.action_new)
-        self.menu_file.addAction(self.action_open)
-        self.menu_file.addSeparator()
-        self.menu_file.addAction(self.action_save)
-        self.menu_file.addAction(self.action_save_as)
         self.menu_file.addAction(self.menu_export_as.menuAction())
 
         self.menu_help.addAction(self.action_help)
@@ -496,15 +474,19 @@ class UiMainWindow(object):
     def update_colors_select(self):
         items = self.table_view_form.get_all().copy()
         self.colors_comboBox.clear()
+        model = self.colors_comboBox.model()
         for item in items:
-            self.colors_comboBox.addItem(str(item['id']))
+            c_item = QStandardItem()
+            c_item.setText(str(item['id']))
+            c_item.setBackground(QColor(item['Hex']))
+            model.appendRow(c_item)
 
     def switch_button_color(self):
         button = self.main_window.sender()
         params = self.get_selected_color()
         print(params)
         button.setText(str(params['id']))
-        button.setStyleSheet("background-color : "+params['Hex'])
+        button.setStyleSheet("background-color : " + params['Hex'])
 
     def update_matrix_size(self):
         for row in range(self.get_height()):
@@ -532,6 +514,9 @@ class UiMainWindow(object):
             self.gridLayout.itemAt(i).widget().setParent(None)
         self.update_matrix_size()
 
+    def redirect_to_github_repo(self):
+        webbrowser.open('https://github.com/lyl-Lynx/Pattern-Builder')
+
     def retranslate_ui(self, main_window):
         _translate = QtCore.QCoreApplication.translate
         main_window.setWindowTitle(_translate("main_window", "Pattern Builder by lyl-Lynx"))
@@ -542,17 +527,12 @@ class UiMainWindow(object):
         self.toolBox_colors_title.setText(_translate("main_window", "Colors"))
         self.colors_table_button.setText(_translate("main_window", "Open colors table"))
         self.reset_button.setText(_translate("main_window", "Reset pattern"))
-        self.save_button.setText(_translate("main_window", "Save"))
         self.export_button.setText(_translate("main_window", "Export"))
         self.menu_file.setTitle(_translate("main_window", "File"))
         self.menu_export_as.setTitle(_translate("main_window", "Export as..."))
         self.menu_matrix.setTitle(_translate("main_window", "Matrix"))
         self.menu_pattern.setTitle(_translate("main_window", "Pattern"))
         self.menu_help.setTitle(_translate("main_window", "Help"))
-        self.action_new.setText(_translate("main_window", "New..."))
-        self.action_open.setText(_translate("main_window", "Open..."))
-        self.action_save.setText(_translate("main_window", "Save"))
-        self.action_save_as.setText(_translate("main_window", "Save as..."))
         self.action_matrix_text_file_txt.setText(_translate("main_window", "Text file (.txt)"))
         self.action_matrix_json.setText(_translate("main_window", "JSON (.json)"))
         self.action_matrix_tabler_csv.setText(_translate("main_window", "Tabler (.csv)"))
@@ -574,6 +554,7 @@ class UiMainWindow(object):
         self.action_about_pb.setText(_translate("main_window", "About Pattern builder"))
         self.action_about_author.setText(_translate("main_window", "About lyl-Lynx"))
         self.action_join_us.setText(_translate("main_window", "Join us on GitHub !"))
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
