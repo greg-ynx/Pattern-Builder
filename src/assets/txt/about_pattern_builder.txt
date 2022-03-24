@@ -12,4 +12,4 @@ open an issue or a merge request on the GitHub repository.
 if you have more questions about this application, you can contact me with this email address :
     <gregory.ployartwork@gmail.com>
 
-lyl-Lynx
+greg-ynx

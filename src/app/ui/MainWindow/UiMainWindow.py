@@ -9,14 +9,19 @@
 #
 # Some modifications made to this generated class by lyl-Lynx.
 
+import os
 import sys
+import webbrowser
 
+
+from config.definitions import img_dir, txt_dir
+from src.app.exceptions.CustomException import UnknownExtensionError
 from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
 from src.app.ui.AboutForm.UiAboutForm import UiAboutForm
-import webbrowser
+from src.app.scripts.FileExport import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QStandardItem, QColor
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QPushButton, QFileDialog, QWidget
 
 
 class UiMainWindow(object):
@@ -31,7 +36,7 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(main_window.sizePolicy().hasHeightForWidth())
         main_window.setSizePolicy(size_policy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_icon.ico"), QtGui.QIcon.Normal,
+        icon.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "pattern_builder_icon.ico")), QtGui.QIcon.Normal,
                        QtGui.QIcon.Off)
         main_window.setWindowIcon(icon)
         self.main_window = main_window
@@ -39,20 +44,20 @@ class UiMainWindow(object):
         self.help_pattern_builder_widget = QtWidgets.QWidget()
         self.help_pattern_builder_form = UiAboutForm(self.help_pattern_builder_widget,
                                                      "Pattern builder help",
-                                                     "../../../assets/img/QuestionMark.png",
-                                                     "../../../assets/txt/help_pattern_builder.txt")
+                                                     os.path.join(img_dir, 'QuestionMark.png'),
+                                                     os.path.join(txt_dir, 'help_pattern_builder.txt'))
 
         self.about_pattern_builder_widget = QtWidgets.QWidget()
         self.about_pattern_builder_form = UiAboutForm(self.about_pattern_builder_widget,
                                                       "About Pattern Builder",
-                                                      "../../../assets/img/pattern_builder_logo_c_800px.png",
-                                                      "../../../assets/txt/about_pattern_builder.txt")
+                                                      os.path.join(img_dir, "pattern_builder_logo_c_800px.png"),
+                                                      os.path.join(txt_dir, "about_pattern_builder.txt"))
 
         self.about_lyl_lynx_widget = QtWidgets.QWidget()
         self.about_lyl_lynx_form = UiAboutForm(self.about_lyl_lynx_widget,
                                                "About lyl-Lynx",
-                                               "../../../assets/img/lyl8Lynx_logo.png",
-                                               "../../../assets/txt/about_lyl_lynx.txt")
+                                               os.path.join(img_dir, "lyl8Lynx_logo.png"),
+                                               os.path.join(txt_dir, "about_lyl_lynx.txt"))
 
         self.colors_widget = QtWidgets.QWidget()
         self.table_view_form = UiTableViewForm(self.colors_widget)
@@ -258,6 +263,7 @@ class UiMainWindow(object):
         size_policy.setHeightForWidth(self.export_button.sizePolicy().hasHeightForWidth())
         self.export_button.setSizePolicy(size_policy)
         self.export_button.setObjectName("export_button")
+        self.export_button.clicked.connect(self.export_as)
         self.export_button_horizontal_layout.addWidget(self.export_button)
 
         spacerItem10 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -316,24 +322,15 @@ class UiMainWindow(object):
         self.menu_file = QtWidgets.QMenu(self.menubar)
         self.menu_file.setObjectName("menu_file")
 
-        self.menu_export_as = QtWidgets.QMenu(self.menu_file)
+        self.action_export_as = QtWidgets.QAction(self.menu_file)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../../../assets/img/Export.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.menu_export_as.setIcon(icon1)
-        self.menu_export_as.setObjectName("menu_export_as")
+        icon1.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "Export.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_export_as.setIcon(icon1)
+        self.action_export_as.setObjectName("menu_export_as")
+        self.action_export_as.triggered.connect(self.export_as)
 
-        self.menu_matrix = QtWidgets.QMenu(self.menu_export_as)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../../../assets/img/matrix.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.menu_matrix.setIcon(icon2)
-        self.menu_matrix.setObjectName("menu_matrix")
-
-        self.menu_pattern = QtWidgets.QMenu(self.menu_export_as)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("../../../assets/img/pattern_builder_logo_c_800px.png"), QtGui.QIcon.Normal,
-                        QtGui.QIcon.Off)
-        self.menu_pattern.setIcon(icon3)
-        self.menu_pattern.setObjectName("menu_pattern")
+        icon2.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "pattern_builder_logo_c_800px.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
         self.menu_help = QtWidgets.QMenu(self.menubar)
         self.menu_help.setObjectName("menu_help")
@@ -344,107 +341,33 @@ class UiMainWindow(object):
         self.statusbar.setObjectName("statusbar")
         main_window.setStatusBar(self.statusbar)
 
-        self.action_matrix_text_file_txt = QtWidgets.QAction(main_window)
-        self.action_matrix_text_file_txt.setObjectName("action_matrix_text_file_txt")
-
-        self.action_matrix_json = QtWidgets.QAction(main_window)
-        self.action_matrix_json.setObjectName("action_matrix_json")
-
-        self.action_matrix_tabler_csv = QtWidgets.QAction(main_window)
-        self.action_matrix_tabler_csv.setObjectName("action_matrix_tabler_csv")
-
-        self.action_matrix_tabler_xls = QtWidgets.QAction(main_window)
-        self.action_matrix_tabler_xls.setObjectName("action_matrix_tabler_xls")
-
-        self.action_matrix_tabler_xlsx = QtWidgets.QAction(main_window)
-        self.action_matrix_tabler_xlsx.setObjectName("action_matrix_tabler_xlsx")
-
-        self.action_matrix_image_jpeg = QtWidgets.QAction(main_window)
-        self.action_matrix_image_jpeg.setObjectName("action_matrix_image")
-
-        self.action_matrix_image_jpg = QtWidgets.QAction(main_window)
-        self.action_matrix_image_jpg.setObjectName("action_matrix_image_jpg")
-
-        self.action_matrix_image_wout_bg_png = QtWidgets.QAction(main_window)
-        self.action_matrix_image_wout_bg_png.setObjectName("action_matrix_image_wout_bg_png")
-
-        self.action_matrix_image_white_bg_png = QtWidgets.QAction(main_window)
-        self.action_matrix_image_white_bg_png.setObjectName("action_matrix_image_white_bg_png")
-
-        self.action_matrix_vector_svg = QtWidgets.QAction(main_window)
-        self.action_matrix_vector_svg.setObjectName("action_matrix_vector_svg")
-
-        self.action_matrix_pdf = QtWidgets.QAction(main_window)
-        self.action_matrix_pdf.setObjectName("action_matrix_pdf")
-
-        self.action_pattern_image_jpeg = QtWidgets.QAction(main_window)
-        self.action_pattern_image_jpeg.setObjectName("action_pattern_image_jpeg")
-
-        self.action_pattern_image_jpg = QtWidgets.QAction(main_window)
-        self.action_pattern_image_jpg.setObjectName("action_pattern_image_jpg")
-
-        self.action_pattern_wout_bg_png = QtWidgets.QAction(main_window)
-        self.action_pattern_wout_bg_png.setObjectName("action_pattern_wout_bg_png")
-
-        self.action_pattern_white_bg_png = QtWidgets.QAction(main_window)
-        self.action_pattern_white_bg_png.setObjectName("action_pattern_white_bg_png")
-
-        self.action_pattern_vector = QtWidgets.QAction(main_window)
-        self.action_pattern_vector.setObjectName("action_pattern_vector")
-
-        self.action_pattern_pdf = QtWidgets.QAction(main_window)
-        self.action_pattern_pdf.setObjectName("action_pattern_pdf")
-
         self.action_help = QtWidgets.QAction(main_window)
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("../../../assets/img/QuestionMark.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_help.setIcon(icon8)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "QuestionMark.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_help.setIcon(icon3)
         self.action_help.setObjectName("action_help")
         self.action_help.triggered.connect(self.help_pattern_builder_widget.show)
 
         self.action_about_pb = QtWidgets.QAction(main_window)
-        self.action_about_pb.setIcon(icon3)
+        self.action_about_pb.setIcon(icon2)
         self.action_about_pb.setObjectName("action_about_pb")
         self.action_about_pb.triggered.connect(self.about_pattern_builder_widget.show)
 
         self.action_about_author = QtWidgets.QAction(main_window)
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("../../../assets/img/lyl8Lynx_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_about_author.setIcon(icon9)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "lyl8Lynx_logo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_about_author.setIcon(icon4)
         self.action_about_author.setObjectName("action_about_author")
         self.action_about_author.triggered.connect(self.about_lyl_lynx_widget.show)
 
         self.action_join_us = QtWidgets.QAction(main_window)
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("../../../assets/img/GitHub.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_join_us.setIcon(icon10)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(os.path.join(img_dir, "GitHub.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_join_us.setIcon(icon5)
         self.action_join_us.setObjectName("action_join_us")
         self.action_join_us.triggered.connect(self.redirect_to_github_repo)
 
-        self.menu_matrix.addAction(self.action_matrix_text_file_txt)
-        self.menu_matrix.addAction(self.action_matrix_json)
-        self.menu_matrix.addSeparator()
-        self.menu_matrix.addAction(self.action_matrix_tabler_csv)
-        self.menu_matrix.addAction(self.action_matrix_tabler_xls)
-        self.menu_matrix.addAction(self.action_matrix_tabler_xlsx)
-        self.menu_matrix.addSeparator()
-        self.menu_matrix.addAction(self.action_matrix_image_jpeg)
-        self.menu_matrix.addAction(self.action_matrix_image_jpg)
-        self.menu_matrix.addAction(self.action_matrix_image_wout_bg_png)
-        self.menu_matrix.addAction(self.action_matrix_image_white_bg_png)
-        self.menu_matrix.addAction(self.action_matrix_vector_svg)
-        self.menu_matrix.addAction(self.action_matrix_pdf)
-        self.menu_export_as.addAction(self.menu_matrix.menuAction())
-
-        self.menu_pattern.addAction(self.action_pattern_image_jpeg)
-        self.menu_pattern.addAction(self.action_pattern_image_jpg)
-        self.menu_pattern.addAction(self.action_pattern_wout_bg_png)
-        self.menu_pattern.addAction(self.action_pattern_white_bg_png)
-        self.menu_pattern.addAction(self.action_pattern_vector)
-        self.menu_pattern.addAction(self.action_pattern_pdf)
-        self.menu_export_as.addAction(self.menu_pattern.menuAction())
-
-        self.menu_file.addAction(self.menu_export_as.menuAction())
+        self.menu_file.addAction(self.action_export_as)
 
         self.menu_help.addAction(self.action_help)
         self.menu_help.addSeparator()
@@ -457,6 +380,7 @@ class UiMainWindow(object):
         self.menubar.addAction(self.menu_help.menuAction())
 
         self.retranslate_ui(main_window)
+
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
     def get_width(self):
@@ -484,7 +408,6 @@ class UiMainWindow(object):
     def switch_button_color(self):
         button = self.main_window.sender()
         params = self.get_selected_color()
-        print(params)
         button.setText(str(params['id']))
         button.setStyleSheet("background-color : " + params['Hex'])
 
@@ -515,7 +438,36 @@ class UiMainWindow(object):
         self.update_matrix_size()
 
     def redirect_to_github_repo(self):
-        webbrowser.open('https://github.com/lyl-Lynx/Pattern-Builder')
+        webbrowser.open('https://github.com/greg-ynx/Pattern-Builder')
+
+    def get_matrix(self):
+        return [[self.gridLayout.itemAt(i * self.get_width() + j).widget().text() for j in range(self.get_height())] for
+                i
+                in range(self.get_width())]
+
+    def export_as(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        file_name, ext = QFileDialog.getSaveFileName(QWidget(), "QFileDialog.getSaveFileName()", "",
+                                                     "Text Files (*.txt) ;; JSON Files (*.json) ;; CSV Files (*.csv) "
+                                                     ";; Tabler files (*.xlsx)",
+                                                     options=options)
+        try:
+            if '.txt' in ext:
+                export_to_txt(self.get_matrix(), file_name)
+            elif '.json' in ext:
+                export_to_json(self.get_matrix(), file_name)
+            elif '.csv' in ext:
+                export_to_csv(self.get_matrix(), file_name)
+            elif '.xlsx' in ext:
+                export_to_xlsx(self.get_matrix(), file_name)
+            else:
+                raise UnknownExtensionError
+        except UnknownExtensionError:
+            print("Not valid extension!")
+        if file_name:
+            print(file_name)
+            print(ext)
 
     def retranslate_ui(self, main_window):
         _translate = QtCore.QCoreApplication.translate
@@ -529,27 +481,8 @@ class UiMainWindow(object):
         self.reset_button.setText(_translate("main_window", "Reset pattern"))
         self.export_button.setText(_translate("main_window", "Export"))
         self.menu_file.setTitle(_translate("main_window", "File"))
-        self.menu_export_as.setTitle(_translate("main_window", "Export as..."))
-        self.menu_matrix.setTitle(_translate("main_window", "Matrix"))
-        self.menu_pattern.setTitle(_translate("main_window", "Pattern"))
+        self.action_export_as.setText(_translate("main_window", "Export as..."))
         self.menu_help.setTitle(_translate("main_window", "Help"))
-        self.action_matrix_text_file_txt.setText(_translate("main_window", "Text file (.txt)"))
-        self.action_matrix_json.setText(_translate("main_window", "JSON (.json)"))
-        self.action_matrix_tabler_csv.setText(_translate("main_window", "Tabler (.csv)"))
-        self.action_matrix_tabler_xls.setText(_translate("main_window", "Tabler (.xls)"))
-        self.action_matrix_tabler_xlsx.setText(_translate("main_window", "Tabler (.xlsx)"))
-        self.action_matrix_image_jpeg.setText(_translate("main_window", "Image (.jpeg)"))
-        self.action_matrix_image_jpg.setText(_translate("main_window", "Image (.jpg)"))
-        self.action_matrix_image_wout_bg_png.setText(_translate("main_window", "Without background (.png)"))
-        self.action_matrix_image_white_bg_png.setText(_translate("main_window", "With white background (.png)"))
-        self.action_matrix_vector_svg.setText(_translate("main_window", "Vector (.svg)"))
-        self.action_matrix_pdf.setText(_translate("main_window", "PDF (.pdf)"))
-        self.action_pattern_image_jpeg.setText(_translate("main_window", "Image (.jpeg)"))
-        self.action_pattern_image_jpg.setText(_translate("main_window", "Image (.jpg)"))
-        self.action_pattern_wout_bg_png.setText(_translate("main_window", "Without background (.png)"))
-        self.action_pattern_white_bg_png.setText(_translate("main_window", "With white background (.png)"))
-        self.action_pattern_vector.setText(_translate("main_window", "Vector (.svg)"))
-        self.action_pattern_pdf.setText(_translate("main_window", "PDF (.pdf)"))
         self.action_help.setText(_translate("main_window", "Pattern builder help"))
         self.action_about_pb.setText(_translate("main_window", "About Pattern builder"))
         self.action_about_author.setText(_translate("main_window", "About lyl-Lynx"))
