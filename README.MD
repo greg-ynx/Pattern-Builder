@@ -2,7 +2,7 @@
 Pattern Builder is a tool that graphically constructs matrix.
 ## How to use Pattern Builder ?
 
-![Pattern Builder UI](../readme/pbui.png)
+![Pattern Builder UI](readme/pbui.png)
 ### Sizes
 Select the size of your matrix with the width and eight select components.
 - Width : Number of columns (max = 16).
