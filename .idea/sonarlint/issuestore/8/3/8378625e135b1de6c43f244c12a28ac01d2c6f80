@@ -1,34 +1,0 @@
-
-cpython:S1192Ó"KDefine a constant instead of duplicating this literal "button{}{}" 3 times.(Ã¥£-
-hpython:S1162"QRename this field "spinBox_y" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÏãËõ
-lpython:S116š"TRename this field "backButton_2" to match the regular expression ^[_a-z][_a-z0-9]*$.(ïÃò‡
-lpython:S116"URename this field "stackedWidget" to match the regular expression ^[_a-z][_a-z0-9]*$.(•³Úı
-ppython:S116B"TRename this field "lineSizePage" to match the regular expression ^[_a-z][_a-z0-9]*$.(ĞÖ¨Şÿÿÿÿÿ
-npython:S116-"RRename this field "widthLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(‘¢‘Öùÿÿÿÿ
-wpython:S116s"[Rename this field "patternMessageLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(¬ÔÌ®ıÿÿÿÿ
-wpython:S116I"`Rename this field "horizontalLayoutWidget_1" to match the regular expression ^[_a-z][_a-z0-9]*$.(çˆÿ³
-rpython:S116"VRename this field "verticalLayout" to match the regular expression ^[_a-z][_a-z0-9]*$.(å±âÆûÿÿÿÿ
-opython:S116®"WRename this field "linePatternPage" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÜŒ™Æ
-hpython:S116M"QRename this field "hLayout_1" to match the regular expression ^[_a-z][_a-z0-9]*$.(º¢Ü
-mpython:S116""QRename this field "spinBox_x" to match the regular expression ^[_a-z][_a-z0-9]*$.(îí–üÿÿÿÿÿ
-epython:S116["NRename this field "xLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(„œşè
-tpython:S116"XRename this field "sizeMessageLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(³Û½Ûúÿÿÿÿ
-opython:S116†"RRename this field "gridLayout" to match the regular expression ^[_a-z][_a-z0-9]*$.(ïª£ùùÿÿÿÿ
-xpython:S116‘"`Rename this field "horizontalLayoutWidget_2" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÑŞÚÜ
-opython:S116}"XRename this field "gridLayoutWidget" to match the regular expression ^[_a-z][_a-z0-9]*$.(ŸŸÃ
-opython:S116¥"RRename this field "okButton_2" to match the regular expression ^[_a-z][_a-z0-9]*$.(èÁ¼ıÿÿÿÿ
-opython:S116="SRename this field "heightLabel" to match the regular expression ^[_a-z][_a-z0-9]*$.(éïÿ„úÿÿÿÿ
-ipython:S116R"RRename this field "okButton_1" to match the regular expression ^[_a-z][_a-z0-9]*$.(šÉÓù
-ipython:S116•"QRename this field "hLayout_2" to match the regular expression ^[_a-z][_a-z0-9]*$.(£àüû
-ƒpython:S101"gRename class "Ui_MainWindow" to match the regular expression ^_?([A-Z_][a-zA-Z0-9]*|[a-z_][a-z0-9_]*)$.( Ìñıùÿÿÿÿ
-\python:S5720ä"CRename "QMainWindow" to "self" or add the missing "self" parameter.(Ú¥ğ¤
-rpython:S117	"VRename this parameter "MainWindow" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÂéÇ´ÿÿÿÿÿ
-rpython:S117"[Rename this local variable "sizePolicy" to match the regular expression ^[_a-z][a-z0-9_]*$.(ğ¶ÀÌ
-gpython:S100	"KRename method "setupUi" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÂéÇ´ÿÿÿÿÿ
-rpython:S117Ë"[Rename this local variable "sizePolicy" to match the regular expression ^[_a-z][a-z0-9_]*$.(œöœ^
-upython:S117à"]Rename this local variable "removeButton" to match the regular expression ^[_a-z][a-z0-9_]*$.(úñáÑ
-kpython:S100×"NRename method "deleteGrid" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ï¸šçÿÿÿÿÿ
-opython:S117ä"WRename this parameter "QMainWindow" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ú¥ğ¤
-gpython:S100ü"ORename method "finalMatrix" to match the regular expression ^[a-z_][a-z0-9_]*$.(ÑÙˆÉ
-spython:S117•"VRename this parameter "MainWindow" to match the regular expression ^[_a-z][a-z0-9_]*$.(”«Àşÿÿÿÿ
-npython:S100•"QRename method "retranslateUi" to match the regular expression ^[a-z_][a-z0-9_]*$.(”«Àşÿÿÿÿ
