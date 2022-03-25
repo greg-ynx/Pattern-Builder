@@ -1,0 +1,2 @@
+PyQt5~=5.15.6
+XlsxWriter~=3.0.3

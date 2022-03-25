@@ -14,7 +14,7 @@ import sys
 import webbrowser
 
 
-from config.definitions import img_dir, txt_dir
+from config.definitions import img_dir, txt_dir, doc_dir
 from src.app.exceptions.CustomException import UnknownExtensionError
 from src.app.ui.TableView.UiTableViewForm import UiTableViewForm
 from src.app.ui.AboutForm.UiAboutForm import UiAboutForm
@@ -380,7 +380,6 @@ class UiMainWindow(object):
         self.menubar.addAction(self.menu_help.menuAction())
 
         self.retranslate_ui(main_window)
-
         QtCore.QMetaObject.connectSlotsByName(main_window)
 
     def get_width(self):
@@ -447,8 +446,7 @@ class UiMainWindow(object):
 
     def export_as(self):
         options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        file_name, ext = QFileDialog.getSaveFileName(QWidget(), "QFileDialog.getSaveFileName()", "",
+        file_name, ext = QFileDialog.getSaveFileName(QWidget(), "Export as", doc_dir,
                                                      "Text Files (*.txt) ;; JSON Files (*.json) ;; CSV Files (*.csv) "
                                                      ";; Tabler files (*.xlsx)",
                                                      options=options)
