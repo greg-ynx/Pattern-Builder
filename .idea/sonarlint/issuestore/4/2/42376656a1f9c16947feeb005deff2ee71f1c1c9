@@ -1,7 +1,0 @@
-
-lpython:S116'"URename this field "plainTextEdit" to match the regular expression ^[_a-z][_a-z0-9]*$.(¼ž¦´
-npython:S116!"RRename this field "gridLayout" to match the regular expression ^[_a-z][_a-z0-9]*$.(ÂžŽÅÿÿÿÿÿ
-xpython:S116$"\Rename this field "textArea_grid_layout" to match the regular expression ^[_a-z][_a-z0-9]*$.(¶åí²þÿÿÿÿ
-wpython:S117"[Rename this local variable "sizePolicy" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶ÎÓŠûÿÿÿÿ
-wpython:S1172"[Rename this local variable "spacerItem" to match the regular expression ^[_a-z][a-z0-9_]*$.(¾ŽýŽþÿÿÿÿ
-mpython:S100E"QRename method "retranslateUi" to match the regular expression ^[a-z_][a-z0-9_]*$.(Ú¢—Óûÿÿÿÿ
