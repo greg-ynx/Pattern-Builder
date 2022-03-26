@@ -23,3 +23,9 @@ class TableMaxItemError(CustomException):
     """
     Exception raised when add attempt is made to fully load table.
     """
+
+
+class UnknownExtensionError(CustomException):
+    """
+    Exception raised when a not valid extension is chosen.
+    """
